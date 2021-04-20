@@ -24,7 +24,7 @@ class User
   end
 
   def show_cards_back
-    @cards.each { printf('%4s', '#') }
+    @cards.each { printf('%4s', '?') }
     puts ''
   end
 
