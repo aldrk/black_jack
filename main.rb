@@ -7,4 +7,5 @@ require_relative 'player'
 require_relative 'interface'
 require_relative 'black_jack'
 
-BlackJack.new
+interface = Interface.new
+BlackJack.new(interface)

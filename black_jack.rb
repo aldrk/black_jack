@@ -1,11 +1,7 @@
 class BlackJack
-  include Interface
-
-  def initialize
-    @player = Player.new(player_name)
-    greet_player(@player.name)
-    @dealer = Dealer.new
-    start_commands
+  def initialize(interface)
+    @interface = interface
+    initialize_game
     while (code = gets.strip)
       game_continue(code)
     end
@@ -15,24 +11,30 @@ class BlackJack
 
   attr_accessor :bank, :game_over
 
+  def initialize_game
+    @player = Player.new(@interface.player_name)
+    @interface.greet_player(@player.name)
+    @dealer = Dealer.new
+    @interface.start_commands
+  end
+
   def game_continue(code)
     case code
     when 's'
       start_game
     when 'q'
-      exit_game
+      @interface.exit_game
     else
-      puts 'Please enter s to start, q to exit game'
+      @interface.error_start_game
     end
   end
 
   def start_game
-    start_new_game
+    @interface.start_new_game
     @bank = 0
     @game_over = false
     @hand = Hand.new
     make_bets
-    deal_cards
     play_game
     open_cards
   end
@@ -40,11 +42,6 @@ class BlackJack
   def make_bets
     self.bank += @player.make_bet
     self.bank += @dealer.make_bet
-  end
-
-  def deal_cards
-    @player.take_cards(@hand.deal_cards)
-    @dealer.take_cards(@hand.deal_cards)
   end
 
   def play_game
@@ -58,7 +55,7 @@ class BlackJack
 
   def player_step
     game_info
-    @player.game_step(command(@player), @hand)
+    @player.game_step(@interface.command(@player), @hand)
     self.game_over = @player.opened
   end
 
@@ -70,14 +67,14 @@ class BlackJack
 
   def open_cards
     self.game_over = true
-    confirm_open_cards
+    @interface.confirm_open_cards
     game_info
     winner
     clear_bank
     collect_cards
     show_balances_amount
-    exit_game if players_cannot_play?
-    start_commands
+    @interface.exit_game if players_cannot_play?
+    @interface.start_commands
   end
 
   def collect_cards
@@ -96,10 +93,10 @@ class BlackJack
     @dealer.show_cards_face if @game_over
     @player.show_cards_face
 
-    show_score(@dealer.name, @hand.score(@dealer.cards)) if @game_over
-    show_score(@player.name, @hand.score(@player.cards))
+    @interface.show_score(@dealer.name, @hand.score(@dealer.cards)) if @game_over
+    @interface.show_score(@player.name, @hand.score(@player.cards))
 
-    show_bank(@bank)
+    @interface.show_bank(@bank)
   end
 
   def stop_game
@@ -111,7 +108,7 @@ class BlackJack
     player_result = @hand.score(@player.cards)
     dealer_result = @hand.score(@dealer.cards)
     if @hand.non_win?(player_result, dealer_result)
-      non_win_game
+      @interface.non_win_game
       players_take_money(@bank / 2.0)
     elsif @hand.player_win?(player_result, dealer_result)
       @player.win(@bank)

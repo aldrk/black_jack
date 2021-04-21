@@ -1,6 +1,4 @@
-module Interface
-  protected
-
+class Interface
   def player_name
     puts 'Enter your name'
     name = gets.strip
@@ -68,5 +66,9 @@ module Interface
 
   def show_bank(bank)
     puts "Bank: #{bank}"
+  end
+
+  def error_start_game
+    puts 'Please enter s to start, q to exit game'
   end
 end

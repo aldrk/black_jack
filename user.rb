@@ -4,7 +4,7 @@ class User
   def initialize(name)
     @name = name
     @balance_amount = START_BALANCE
-    @cards = []
+    @cards = Hand.new.deal_cards(2)
     @passed = false
     @taken = false
     @opened = false
