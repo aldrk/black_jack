@@ -5,12 +5,11 @@ class Hand
   DEFAULT_VALUE = 10
 
   def initialize
-    deck = CardDeck.new
-    @cards = deck.cards
+    @cards = []
   end
 
   def deal_cards(count = 2)
-    @cards.sample(count).each { |value| @cards.delete(value) }
+    @cards = CardDeck.new.cards(count)
   end
 
   def deal_one_card
