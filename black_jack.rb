@@ -12,9 +12,10 @@ class BlackJack
   attr_accessor :bank, :game_over
 
   def initialize_game
-    @player = Player.new(@interface.player_name)
+    @deck = CardDeck.new
+    @player = Player.new(@interface.player_name, @deck)
     @interface.greet_player(@player.name)
-    @dealer = Dealer.new
+    @dealer = Dealer.new(@deck)
     @interface.start_commands
   end
 
@@ -55,13 +56,13 @@ class BlackJack
 
   def player_step
     game_info
-    @player.game_step(@interface.command(@player), @hand)
+    @player.game_step(@interface.command(@player), @hand, @deck)
     self.game_over = @player.opened
   end
 
   def dealer_step
     game_info
-    @dealer.game_step(@hand)
+    @dealer.game_step(@hand, @deck)
     self.game_over = @dealer.opened
   end
 
@@ -93,8 +94,8 @@ class BlackJack
     @dealer.show_cards_face if @game_over
     @player.show_cards_face
 
-    @interface.show_score(@dealer.name, @hand.score(@dealer.cards)) if @game_over
-    @interface.show_score(@player.name, @hand.score(@player.cards))
+    @interface.show_score(@dealer.name, @hand.score(@dealer.hand)) if @game_over
+    @interface.show_score(@player.name, @hand.score(@player.hand))
 
     @interface.show_bank(@bank)
   end
@@ -105,8 +106,8 @@ class BlackJack
   end
 
   def winner
-    player_result = @hand.score(@player.cards)
-    dealer_result = @hand.score(@dealer.cards)
+    player_result = @hand.score(@player.hand)
+    dealer_result = @hand.score(@dealer.hand)
     if @hand.non_win?(player_result, dealer_result)
       @interface.non_win_game
       players_take_money(@bank / 2.0)

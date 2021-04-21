@@ -1,15 +1,15 @@
 class Dealer < User
   PASS_SCORE = 17
 
-  def initialize(name = 'Dealer')
-    super(name)
+  def initialize(deck, name = 'Dealer')
+    super(name, deck)
   end
 
-  def game_step(hand)
-    if can_pass?(hand.score(@cards))
+  def game_step(hand, deck)
+    if can_pass?(hand.score(@hand))
       pass_move
     elsif can_take_card?
-      take_card(hand.deal_one_card)
+      take_card(hand.deal_one_card(deck))
     else
       open_cards
     end

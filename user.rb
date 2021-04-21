@@ -1,10 +1,10 @@
 class User
-  attr_reader :passed, :taken, :opened, :name, :cards, :balance_amount
+  attr_reader :passed, :taken, :opened, :name, :hand, :balance_amount
 
-  def initialize(name)
+  def initialize(name, deck)
     @name = name
     @balance_amount = START_BALANCE
-    @cards = Hand.new.deal_cards(2)
+    @hand = Hand.new.deal_cards(2, deck)
     @passed = false
     @taken = false
     @opened = false
@@ -20,16 +20,16 @@ class User
   end
 
   def take_cards(cards)
-    @cards.concat(cards) if can_take_cards?
+    @hand.concat(cards) if can_take_cards?
   end
 
   def show_cards_back
-    @cards.each { printf('%4s', '?') }
+    @hand.each { printf('%4s', '?') }
     puts ''
   end
 
   def show_cards_face
-    @cards.each { |card| printf('%4s', "#{card.value}#{card.suit}") }
+    @hand.each { |card| printf('%4s', "#{card.value}#{card.suit}") }
     puts ''
   end
 
@@ -38,7 +38,7 @@ class User
   end
 
   def cards_limit_reached?
-    @cards.size == MAX_CARDS_COUNT
+    @hand.size == MAX_CARDS_COUNT
   end
 
   def win(bank)
@@ -47,7 +47,7 @@ class User
   end
 
   def clear_cards
-    @cards = []
+    @hand = []
     @passed = false
     @taken = false
     @opened = false
@@ -78,7 +78,7 @@ class User
   end
 
   def can_take_cards?
-    @cards.size < 3
+    @hand.size < 3
   end
 
   def can_open_cards?(command)

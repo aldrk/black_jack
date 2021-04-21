@@ -8,12 +8,12 @@ class Hand
     @cards = []
   end
 
-  def deal_cards(count = 2)
-    @cards = CardDeck.new.cards(count)
+  def deal_cards(count = 2, card_deck)
+    @cards = card_deck.cards(count)
   end
 
-  def deal_one_card
-    deal_cards(1)
+  def deal_one_card(card_deck)
+    deal_cards(1, card_deck)
   end
 
   def score(cards)
