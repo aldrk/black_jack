@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+# rubocop:disable Lint/MissingSuper
+
 # Deck class
 class CardDeck < Card
   def initialize
@@ -22,3 +24,5 @@ class CardDeck < Card
     cards.shuffle
   end
 end
+
+# rubocop:enable Lint/MissingSuper

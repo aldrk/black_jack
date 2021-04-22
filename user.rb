@@ -27,12 +27,12 @@ class User
   end
 
   def show_cards_back
-    @hand.each { printf('%4s', '?') }
+    @hand.each { printf(format('%4<sym>s', sym: '?')) }
     puts ''
   end
 
   def show_cards_face
-    @hand.each { |card| printf('%4s', "#{card.value}#{card.suit}") }
+    @hand.each { |card| printf(format('%4<card>s', card: "#{card.value}#{card.suit}")) }
     puts ''
   end
 

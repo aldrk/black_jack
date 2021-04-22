@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+# rubocop:disable Metrics/ClassLength
+
 # Main game class
 class BlackJack
   def initialize(interface)
@@ -139,3 +141,5 @@ class BlackJack
     @player.balance_amount.zero? || @dealer.balance_amount.zero?
   end
 end
+
+# rubocop:enable Metrics/ClassLength
