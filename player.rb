@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# Player class
 class Player < User
   def game_step(command, hand, deck)
     if can_pass?(command)

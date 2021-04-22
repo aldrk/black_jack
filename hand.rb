@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# Hand class
 class Hand
   ACE_MIN = 1
   ACE_MAX = 11
@@ -8,12 +11,12 @@ class Hand
     @cards = []
   end
 
-  def deal_cards(count = 2, card_deck)
+  def deal_cards(card_deck, count = 2)
     @cards = card_deck.cards(count)
   end
 
   def deal_one_card(card_deck)
-    deal_cards(1, card_deck)
+    deal_cards(card_deck, 1)
   end
 
   def score(cards)

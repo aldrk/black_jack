@@ -1,10 +1,13 @@
+# frozen_string_literal: true
+
+# User class
 class User
   attr_reader :passed, :taken, :opened, :name, :hand, :balance_amount
 
   def initialize(name, deck)
     @name = name
     @balance_amount = START_BALANCE
-    @hand = Hand.new.deal_cards(2, deck)
+    @hand = Hand.new.deal_cards(deck, 2)
     @passed = false
     @taken = false
     @opened = false

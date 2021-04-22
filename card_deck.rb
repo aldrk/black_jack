@@ -1,5 +1,7 @@
-class CardDeck < Card
+# frozen_string_literal: true
 
+# Deck class
+class CardDeck < Card
   def initialize
     @cards = create_deck
   end

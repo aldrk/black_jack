@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# Dealer class
 class Dealer < User
   PASS_SCORE = 17
 

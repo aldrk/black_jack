@@ -1,8 +1,12 @@
+# frozen_string_literal: true
+
+# Interface for game class
 class Interface
   def player_name
     puts 'Enter your name'
     name = gets.strip
     raise 'Name cannot be empty' unless name != ''
+
     name
   rescue RuntimeError => e
     puts e.message
@@ -14,6 +18,7 @@ class Interface
     code = gets.strip
     exit_game if code == 'q'
     raise 'Incorrect command' unless %w[p t o].include? code
+
     code
   rescue RuntimeError => e
     puts e.message

@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# Main game class
 class BlackJack
   def initialize(interface)
     @interface = interface
@@ -49,6 +52,7 @@ class BlackJack
     until @game_over
       player_step
       break if @game_over || players_cards_limit_reached?
+
       dealer_step
       stop_game if players_cards_limit_reached?
     end
